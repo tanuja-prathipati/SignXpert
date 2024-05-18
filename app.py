@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify
 import speech_recognition as sr
 from nlp import process_text
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Function to record audio and convert it to text
 def record_and_convert_audio():
@@ -32,5 +32,5 @@ def record_audio():
     print("Processed Text:", nlp_result)  # Print processed text to the console
     return jsonify({"text": text})  # Return only the recorded speech to the frontend
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     app.run(debug=True)

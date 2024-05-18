@@ -48,6 +48,6 @@ def record_and_convert_audio(filename, duration=5):
     except sr.RequestError as e:
         print(f"Could not request results; {e}")
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     filename = "audio.wav"
     record_and_convert_audio(filename)
