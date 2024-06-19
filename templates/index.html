@@ -85,6 +85,13 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             resize: none;
         }
+
+        #sign-image {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            display: none;  /* Hide the image by default */
+        }
     </style>
 </head>
 <body>
@@ -99,20 +106,33 @@
     <div id="div2">
         <h3 id="text">Speak here:</h3>
         <input type="button" class="record-button btn btn-primary" value="Record" onclick="recordAndDisplay()"><br><br><br>
-        <textarea id="text-gen" rows="10" cols="50" class="form-control"></textarea>
+        <textarea id="text-gen" rows="10" cols="50" class="form-control"></textarea><br>
+        <img id="sign-image" src="" alt="Sign Image">
     </div>
 
     <script>
         function recordAndDisplay() {
             var textGen = document.getElementById('text-gen');
+            var signImage = document.getElementById('sign-image');
             textGen.value = "Recording...";
+            signImage.style.display = 'none'; // Hide the image initially
 
             fetch('/record') // Send a request to the backend
                 .then(response => response.json())
                 .then(data => {
                     textGen.value = data.text; // Update the textarea with the recorded speech
+                    if (data.image_path) {
+                        signImage.src = data.image_path; // Update the image src with the sign image path
+                        signImage.style.display = 'block'; // Display the image
+                    } else {
+                        signImage.style.display = 'none'; // Hide the image if no path is returned
+                    }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    textGen.value = "Error recording audio";
+                    signImage.style.display = 'none'; // Hide the image in case of error
+                });
         }
     </script>
 </body>
