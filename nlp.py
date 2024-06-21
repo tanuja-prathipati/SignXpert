@@ -30,6 +30,7 @@ def process_text(text):
     rake_nltk_var.extract_keywords_from_text(text)
     keywords = rake_nltk_var.get_ranked_phrases()
     
+    
     return {
         "tokens": tokens,
         "pos_tags": pos_tags,

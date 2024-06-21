@@ -35,6 +35,7 @@ def record_and_convert_audio(filename, duration=5):
     wf.setframerate(RATE)
     wf.writeframes(b''.join(frames))
     wf.close()
+    
 
     # Convert recorded audio to text
     recognizer = sr.Recognizer()
