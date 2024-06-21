@@ -1,9 +1,14 @@
 from flask import Flask, render_template, jsonify, request
-import os
+from flask_pymongo import PyMongo
+
 import speech_recognition as sr
 from nlp import process_text
 
 app = Flask(__name__)
+
+# Configure MongoDB
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/feedbackdb'  # Replace with your MongoDB URI
+mongo = PyMongo(app)
 
 # Map of words to sign images
 SIGN_IMAGE_MAP = {
@@ -70,8 +75,13 @@ def submit_feedback():
         email = request.form.get('email')
         feedback = request.form.get('feedback')
 
-        # For demonstration purposes, print the feedback to console
-        print(f"Feedback received from {name} ({email}): {feedback}")
+        # Store the feedback in MongoDB
+        feedback_collection = mongo.db.feedback
+        feedback_collection.insert_one({
+            'name': name,
+            'email': email,
+            'feedback': feedback
+        })
 
         # Return a JSON response indicating success
         return jsonify({"message": "Feedback submitted successfully!"}), 200
