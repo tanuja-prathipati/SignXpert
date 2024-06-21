@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, redirect, url_for
 import speech_recognition as sr
 from nlp import process_text
 
@@ -50,6 +50,23 @@ def record_audio():
     }
     
     return jsonify(response)
+
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
+
+@app.route('/submit_feedback', methods=['POST'])
+def submit_feedback():
+    name = request.form['name']
+    email = request.form['email']
+    message = request.form['message']
+    # Process the feedback (e.g., save to database, send email, etc.)
+    print(f"Received feedback from {name} ({email}): {message}")
+    return redirect(url_for('thank_you'))
+
+@app.route('/thank_you')
+def thank_you():
+    return "Thank you for your feedback!"
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - SignXpert</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #2e9232, #2196F3);
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #2196F3;
+        }
+
+        .navbar-brand {
+            color: white;
+            animation: brand-animation 2s infinite;
+        }
+
+        .navbar-nav {
+            margin-right: 350px;
+        }
+
+        .navbar-nav .nav-link {
+            color: rgb(237, 238, 241) !important;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link:focus {
+            color: #1a0be8 !important;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #1a0be8 !important; 
+        }
+
+        .feedback-form {
+            padding: 50px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            max-width: 600px;
+        }
+
+        .feedback-form h2 {
+            margin-bottom: 20px; 
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 40px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        .submit-btn {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .submit-btn:hover {
+            background-color: #1a0be8;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer .navbar-brand {
+            display: inline-block;
+            vertical-align: middle;
+            color: white !important;
+            animation: none;
+        }
+
+        .footer-content {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: left;
+            margin-left: 20px; /* Adjust as needed */
+        }
+
+        @keyframes brand-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <a class="navbar-brand" href="/">SignXpert</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#translate">Translate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/feedback">Feedback</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#footer">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Feedback Form Section -->
+    <div class="container feedback-form">
+        <h2>Feedback Form</h2>
+        <form id="feedbackForm">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="feedback">Feedback</label>
+                <textarea class="form-control" id="feedback" name="feedback" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn btn btn-primary">Submit</button>
+        </form>
+    </div><br><br>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <a class="navbar-brand" href="/">SignXpert</a>
+        <div class="footer-content">
+            <div>Contact Us:</div>
+            <div>Mail: <a href="mailto:signxpert@gmail.com">signxpert@gmail.com</a></div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            
+            fetch('/submit_feedback', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Feedback submitted successfully!');
+                document.getElementById('feedbackForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting feedback. Please try again later.');
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
