@@ -1,8 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from flask_pymongo import PyMongo
-
 import speech_recognition as sr
-from nlp import process_text
 
 app = Flask(__name__)
 
@@ -50,7 +48,6 @@ def index():
 @app.route('/record', methods=['GET'])
 def record_audio():
     text = record_and_convert_audio()
-    nlp_result = process_text(text)
     
     image_path = SIGN_IMAGE_MAP.get(text.lower(), None)  # Fetch the image path based on the text
     
