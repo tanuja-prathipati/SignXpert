@@ -1,4 +1,2 @@
 # SignXpert
-This project aims to develop a scalable solution for Indian Sign Language (ISL) communication, utilizing speech-to-text APIs. The system converts spoken language into ISL gestures. Implemented in Python, it bridges communication gaps for deaf individuals, with future plans for mobile/web integration and enhanced analysis.
-
-The project architecture utilizes Python with PyAudio for audio input. Google Speech API converts audio to text.
+This project develops a scalable solution for Indian Sign Language (ISL) communication by utilizing advanced speech-to-text APIs and predefined word-to-sign mappings. Implemented in Python, it effectively translates spoken language into visual ISL gestures, bridging communication gaps for the deaf community. By converting spoken words into corresponding sign images based on a predefined dictionary, the system promotes accessible and seamless interactions for ISL users, highlighting the potential of technology to enhance communication for the deaf community.
